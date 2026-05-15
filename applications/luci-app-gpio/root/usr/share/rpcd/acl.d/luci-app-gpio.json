@@ -1,0 +1,18 @@
+{
+	"luci-app-gpio": {
+		"description": "Grant access to GPIO switches",
+		"read": {
+			"file": {
+				"/sys/class/gpio": [ "list" ]
+			},
+			"ubus": {
+				"luci.gpio": [ "list" ]
+			}
+		},
+		"write": {
+			"ubus": {
+				"luci.gpio": [ "set" ]
+			}
+		}
+	}
+}

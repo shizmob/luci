@@ -1,0 +1,84 @@
+#!/usr/bin/env ucode
+
+'use strict';
+import { connect } from 'ubus';
+import { cursor } from 'uci';
+
+const ubus = connect();
+const uci = cursor();
+
+function reloadConfig(package, cb) {
+	return ubus.defer("service", "event", {
+		type: "config.change",
+		data: {
+			package: package
+		}
+	}, cb);
+}
+
+return { 
+	'luci.gpio': {
+		list: {
+			call: function() {
+				let gpios = [];
+				uci.foreach("system", "gpio_switch", function(gpio) {
+					push(gpios, {
+						"name": gpio[".name"],
+						"description": gpio["name"],
+						"pin": gpio["gpio_pin"],
+						"value": gpio["value"] !== "0"
+					});
+				});
+				uci.unload("system");
+				return {"result": gpios};
+			}
+		},
+		get: {
+			args: {
+				name: "gpio"
+			},
+
+			call: function(req) {
+				const gpio = uci.get_all("system", req.args.name);
+				if (!gpio || gpio[".type"] !== "gpio_switch") {
+					exit(UBUS_STATUS_NOT_FOUND);
+				}
+				uci.unload("system");
+				return {
+					"name": gpio[".name"],
+					"description": gpio["name"],
+					"pin": gpio["gpio_pin"],
+					"value": gpio["value"] !== "0"
+				};
+			}
+		},
+		set: {
+			args: {
+				name: "gpio",
+				value: false
+			},
+
+			call: function(req) {
+				const gpio = uci.get("system", req.args.name);
+				if (gpio !== "gpio_switch") {
+					exit(UBUS_STATUS_NOT_FOUND);
+				}
+				uci.set("system", req.args.name, "value", req.args.value ? "1": "0");
+				uci.commit("system");
+				uci.unload("system");
+
+				const deferred = reloadConfig("system", function(code, reply) {
+					if (code != 0) {
+						req.reply(reply, code);
+					} else {
+						req.reply({});
+					}
+				});
+				if (!deferred) {
+					req.reply(ubus.error(), UBUS_STATUS_SYSTEM_ERROR);
+				}
+				return deferred;
+			}
+		}
+	}
+};

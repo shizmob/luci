@@ -1,0 +1,13 @@
+{
+	"admin/system/gpio": {
+		"title": "GPIO Configuration",
+		"order": 55,
+		"action": {
+			"type": "view",
+			"path": "gpio"
+		},
+		"depends": {
+			"acl": [ "luci-app-gpio" ]
+		}
+	}
+}

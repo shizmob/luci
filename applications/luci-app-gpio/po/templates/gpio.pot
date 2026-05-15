@@ -1,0 +1,38 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/gpio.js:26
+msgid "<abbr title="General Purpose Input/Output">GPIO</abbr> Configuration"
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/gpio.js:27
+msgid "Change values of the device <abbr title="General Purpose Input/Output">GPIO</abbr> pins."
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/gpio.js:34
+msgid "Add GPIO pin"
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/gpio.js:37
+msgid "Description"
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/gpio.js:38
+msgid "Pin"
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/gpio.js:43
+msgid "On"
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/status/include/28_gpio.js:20
+msgid "GPIO"
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/status/include/28_gpio.js:39
+msgid "Turn on"
+msgstr ""
+
+#: applications/luci-app-gpio/htdocs/luci-static/resources/view/status/include/28_gpio.js:39
+msgid "Turn off"
+msgstr ""
